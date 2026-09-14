@@ -1,0 +1,19 @@
+square lattice:
+  size 1:     1 shapes,   1 nakade
+      ((0, 0),)
+  size 2:     1 shapes,   1 nakade
+      ((0, 0), (0, 1))
+  size 3:     2 shapes,   2 nakade
+      ((0, 0), (0, 1), (0, 2))
+      ((0, 0), (0, 1), (1, 0))
+  size 4:     5 shapes,   2 nakade
+      ((0, 0), (0, 1), (0, 2), (1, 1))
+      ((0, 0), (0, 1), (1, 0), (1, 1))
+  size 5:    12 shapes,   2 nakade
+      ((0, 0), (0, 1), (0, 2), (1, 0), (1, 1))
+      ((0, 0), (1, -1), (1, 0), (1, 1), (2, 0))
+  size 6:    35 shapes,   1 nakade
+      ((0, 0), (0, 1), (1, -1), (1, 0), (1, 1), (2, 0))
+  size 7:   108 shapes,   0 nakade
+  size 8:   369 shapes,   0 nakade
+  size 9:  1285 shapes,   0 nakade
