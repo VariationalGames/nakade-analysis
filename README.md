@@ -1,9 +1,8 @@
 # nakade-analysis
 
 Enumerates the single-eye (nakade) eyespace shapes on the hex and square lattices, and renders them
-as charts. This is the code and raw data behind the "single-eye shapes of Badux" work in the
-[variationalgo](../variationalgo) repo — the plan in `doc/open/hex-nakade-shapes-plan.md` and the
-blog post in `doc/blog/`. Research tooling, not engine code.
+as charts. This is the code and raw data behind the single-eye shapes of
+[Badux](https://www.baduxgo.com/), Go on a hex board. Research tooling, not engine code.
 
 | File                            | What it is                                                                 |
 | ------------------------------- | -------------------------------------------------------------------------- |
@@ -50,15 +49,15 @@ touching the solver, then re-render the charts:
 ```
 python3 vital.py hex single-eye-shapes-badux.json
 python3 vital.py square single-eye-shapes-go.json
-venv/bin/python chart2.py single-eye-shapes-badux.json hex ../variationalgo/doc/blog/single-eye-shapes-badux.png \
+venv/bin/python chart2.py single-eye-shapes-badux.json hex single-eye-shapes-badux.png \
     "The single-eye shapes of Badux" \
     "21 eyespaces that cannot be made to yield two eyes when the opponent moves first — the enclosed group dies. Rows are eyespace size."
-venv/bin/python chart2.py single-eye-shapes-go.json square ../variationalgo/doc/blog/single-eye-shapes-go.png \
+venv/bin/python chart2.py single-eye-shapes-go.json square single-eye-shapes-go.png \
     "The single-eye shapes of Go" \
     "9 eyespaces that cannot be made to yield two eyes when the opponent moves first — the enclosed group dies. Rows are eyespace size."
 ```
 
-The rendered PNGs live with the blog post in variationalgo, not here.
+The rendered PNGs are not checked in.
 
 ## Results
 
@@ -69,3 +68,7 @@ The rendered PNGs live with the blog post in variationalgo, not here.
 
 Both rows are exhaustive to size 9. Sizes 8 and 9 take a while — size 9 hex is 6,572 shapes and ran
 for roughly an hour.
+
+## License
+
+[Apache License 2.0](LICENSE).
