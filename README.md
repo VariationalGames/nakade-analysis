@@ -1,7 +1,8 @@
 # nakade-analysis
 
 Enumerates the single-eye (nakade) eyespace shapes on the hex and square lattices, and renders them
-as charts. This is the code and raw data behind the single-eye shapes of
+as charts. This is the code and raw data behind the blog post
+[The Nakade Shapes of Badux](https://badux.substack.com/p/the-nakade-shapes-of-badux), about
 [Badux](https://www.baduxgo.com/), Go on a hex board. Research tooling, not engine code.
 
 | File                            | What it is                                                                 |
@@ -9,6 +10,7 @@ as charts. This is the code and raw data behind the single-eye shapes of
 | `nakade.py`                     | The solver and shape enumerator. Lattice-parameterised: `hex` or `square`.  |
 | `vital.py`                      | Annotates a shape JSON file with each shape's vital points.                 |
 | `chart2.py`                     | Renders a shape JSON file as a chart. Handles both lattices.                |
+| `tables.py`                     | Renders the two counts-by-size tables as images.                            |
 | `prune2.py`                     | Checks the growth rule against known results.                               |
 | `monotone.py`                   | Tests whether monotonicity holds on a lattice. It does not, on either.      |
 | `polyhex.py`                    | Counts free polyhexes and polyominoes by size.                              |
@@ -55,6 +57,12 @@ venv/bin/python chart2.py single-eye-shapes-badux.json hex single-eye-shapes-bad
 venv/bin/python chart2.py single-eye-shapes-go.json square single-eye-shapes-go.png \
     "The single-eye shapes of Go" \
     "9 eyespaces that cannot be made to yield two eyes when the opponent moves first — the enclosed group dies. Rows are eyespace size."
+```
+
+The two summary tables — single-eye shapes by size, and all shapes by size — render as images too:
+
+```
+venv/bin/python tables.py single-eye-shapes-by-size.png all-shapes-by-size.png
 ```
 
 The rendered PNGs are not checked in.

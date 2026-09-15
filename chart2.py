@@ -14,6 +14,7 @@ SQ3 = math.sqrt(3)
 BG, WALL, WALL_ED = "#f4f3ee", "#15171c", "#000000"
 LINE, POINT, VITAL = "#2f3d9c", "#1c2670", "#d0342c"
 TEXT, DIM = "#23282f", "#6d7480"
+CANVAS_W = 57.0   # shared canvas width, so charts for both lattices come out the same size
 
 HEX_NBRS = [(1, -1, 0), (1, 0, -1), (0, 1, -1), (-1, 1, 0), (-1, 0, 1), (0, -1, 1)]
 SQ_NBRS = [(1, 0), (-1, 0), (0, 1), (0, -1)]
@@ -22,7 +23,7 @@ SQ_NBRS = [(1, 0), (-1, 0), (0, 1), (0, -1)]
 def cfg(kind):
     if kind == "hex":
         return HEX_NBRS, (lambda c: (SQ3 * (c[0] + c[2] / 2.0), -1.5 * c[2])), 0.7
-    return SQ_NBRS, (lambda c: (1.5 * c[0], -1.5 * c[1])), 0.6
+    return SQ_NBRS, (lambda c: (SQ3 * c[0], -SQ3 * c[1])), 0.7
 
 
 def ring_of(cells, nbrs):
@@ -80,18 +81,22 @@ def render(by_size, kind, path, title, subtitle):
         ext = [extent(cells, kind, nbrs, pix, r) for cells, _ in shapes]
         rows.append((size, shapes, [w for w, _ in ext], max(h for _, h in ext)))
 
-    total_h = sum(h for _, _, _, h in rows) + gap * (len(rows) + 1) + 3.4
-    total_w = max(max(sum(w) + gap * (len(w) + 1) for _, _, w, _ in rows) + 2.0, 14)
+    total_h = sum(h for _, _, _, h in rows) + gap * (len(rows) + 1) + 4.8
+    natural_w = max(sum(w) + gap * (len(w) + 1) for _, _, w, _ in rows) + 2.0
+    if natural_w > CANVAS_W:
+        print(f"warning: rows need width {natural_w:.1f}, wider than CANVAS_W {CANVAS_W}")
+    total_w = max(natural_w, CANVAS_W)
 
-    fig, ax = plt.subplots(figsize=(total_w * 0.48, total_h * 0.48))
+    fig = plt.figure(figsize=(total_w * 0.48, total_h * 0.48))
+    ax = fig.add_axes([0, 0, 1, 1])
     fig.patch.set_facecolor(BG)
     ax.set_facecolor(BG)
 
     y = total_h - 1.0
-    ax.text(total_w / 2, y, title, ha="center", va="top", fontsize=21, color=TEXT, weight="bold")
-    y -= 1.25
-    ax.text(total_w / 2, y, subtitle, ha="center", va="top", fontsize=10.5, color=DIM)
-    y -= 1.5
+    ax.text(total_w / 2, y, title, ha="center", va="top", fontsize=48, color=TEXT, weight="bold")
+    y -= 2.8
+    ax.text(total_w / 2, y, subtitle, ha="center", va="top", fontsize=24, color=DIM)
+    y -= 3.0
 
     for size, shapes, widths, rowh in rows:
         y -= rowh / 2
@@ -103,10 +108,10 @@ def render(by_size, kind, path, title, subtitle):
         y -= rowh / 2 + gap
 
     ax.set_xlim(0, total_w)
-    ax.set_ylim(y, total_h)
+    ax.set_ylim(0, total_h)
     ax.set_aspect("equal")
     ax.axis("off")
-    fig.savefig(path, dpi=200, facecolor=BG, bbox_inches="tight", pad_inches=0.28)
+    fig.savefig(path, dpi=200, facecolor=BG)
     print(f"wrote {path}")
 
 
